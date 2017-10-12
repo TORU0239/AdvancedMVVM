@@ -1,4 +1,4 @@
-package my.toru.advancedmvvm.example;
+package my.toru.advancedmvvm.example.model;
 
 import my.toru.advancedmvvm.model.MvvmModel;
 

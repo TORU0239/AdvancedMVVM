@@ -1,4 +1,4 @@
-package my.toru.advancedmvvm.example;
+package my.toru.advancedmvvm.example.model;
 
 import com.google.gson.annotations.SerializedName;
 
@@ -17,7 +17,7 @@ public class ResponseModel extends MvvmModel {
     @SerializedName("status_message")
     private String statusMessage;
 
-    private String response;
+    private MyTagModel response;
 
     public String getStatusCode() {
         return statusCode;
@@ -35,11 +35,11 @@ public class ResponseModel extends MvvmModel {
         this.statusMessage = statusMessage;
     }
 
-    public String getResponse() {
+    public MyTagModel getResponse() {
         return response;
     }
 
-    public void setResponse(String response) {
+    public void setResponse(MyTagModel response) {
         this.response = response;
     }
 }

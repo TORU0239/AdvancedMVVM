@@ -1,12 +1,18 @@
 package my.toru.advancedmvvm.example.repository;
 
+import java.util.Map;
 import java.util.concurrent.TimeUnit;
 
+import io.reactivex.Observable;
+import my.toru.advancedmvvm.example.model.RequestModel;
+import my.toru.advancedmvvm.example.model.ResponseModel;
 import okhttp3.OkHttpClient;
 import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.Retrofit;
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
 import retrofit2.converter.gson.GsonConverterFactory;
+import retrofit2.http.Body;
+import retrofit2.http.POST;
 
 /**
  * Created by toruchoi on 11/10/2017.
@@ -14,6 +20,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 public class ApiBaseRepository {
     private static final String TAG = ApiBaseRepository.class.getSimpleName();
+    private static int TIMEOUT = 5000;
     private static ApiBaseRepository retrofitApiBase;
 
     private Retrofit retrofit;
@@ -34,9 +41,9 @@ public class ApiBaseRepository {
         loggingInterceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
 
         OkHttpClient client = new OkHttpClient.Builder()
-                .connectTimeout(5000, TimeUnit.MILLISECONDS)
-                .readTimeout(5000, TimeUnit.MILLISECONDS)
-                .writeTimeout(5000, TimeUnit.MILLISECONDS)
+                .connectTimeout(TIMEOUT, TimeUnit.MILLISECONDS)
+                .readTimeout(TIMEOUT, TimeUnit.MILLISECONDS)
+                .writeTimeout(TIMEOUT, TimeUnit.MILLISECONDS)
                 .addInterceptor(loggingInterceptor)
                 .build();
 
@@ -50,5 +57,10 @@ public class ApiBaseRepository {
 
     public Retrofit getRetrofit() {
         return retrofit;
+    }
+
+    public interface IPushwooshService {
+        @POST("getTags")
+        Observable<ResponseModel> getTagService(@Body Map<String, RequestModel> query);
     }
 }

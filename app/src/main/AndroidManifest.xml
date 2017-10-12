@@ -2,6 +2,8 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="my.toru.advancedmvvm">
 
+    <uses-permission android:name="android.permission.INTERNET"/>
+
     <application
         android:name=".app.AdvancedMVVMApp"
         android:allowBackup="true"
