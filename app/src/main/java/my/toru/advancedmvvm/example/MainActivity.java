@@ -2,7 +2,10 @@ package my.toru.advancedmvvm.example;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.SearchView;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
 
 import java.util.HashMap;
 
@@ -32,7 +35,6 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
         initViewModel();
     }
 
@@ -48,19 +50,23 @@ public class MainActivity extends AppCompatActivity {
         unbindViewModel();
     }
 
-    private void initViewModel(){
-        viewModel = new ExampleViewModel();
-    }
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.search_menu, menu);
+        final MenuItem searchMenuItem =  menu.findItem(R.id.action_search);
+        final SearchView searchView = (SearchView) searchMenuItem.getActionView();
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                Log.w(TAG, "query:" + query);
 
-    private void bindViewModel(){
-        HashMap<String, RequestModel> query = new HashMap<>();
-        RequestModel requestModel = new RequestModel();
-        requestModel.setApplication("FCB57-748C5");
-        requestModel.setHwid("97476d339300fb63");
-        query.put("request",requestModel);
+                HashMap<String, RequestModel> tagQueryModel = new HashMap<>();
+                RequestModel requestModel = new RequestModel();
+                requestModel.setApplication("FCB57-748C5");
+                requestModel.setHwid("97476d339300fb63");
+                tagQueryModel.put("request",requestModel);
 
-        disposable = new CompositeDisposable();
-        disposable.add(viewModel.getTagsModel(query)
+                disposable.add(viewModel.getTagsModel(tagQueryModel)
                         .observeOn(AndroidSchedulers.mainThread())
                         .subscribeOn(Schedulers.io())
                         .map(new Function<ResponseModel<MyTagModel>, MyTagModel>() {
@@ -83,7 +89,30 @@ public class MainActivity extends AppCompatActivity {
                             @Override
                             public void run() throws Exception {}
                         })
-        );
+                );
+
+
+                if( ! searchView.isIconified()) {
+                    searchView.setIconified(true);
+                }
+                searchMenuItem.collapseActionView();
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                return false;
+            }
+        });
+        return true;
+    }
+
+    private void initViewModel(){
+        viewModel = new ExampleViewModel();
+    }
+
+    private void bindViewModel(){
+        disposable = new CompositeDisposable();
     }
 
     private void unbindViewModel(){

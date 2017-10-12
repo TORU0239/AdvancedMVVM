@@ -33,4 +33,8 @@ public class ExampleViewModel implements MvvmViewModel {
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribeOn(Schedulers.io());
     }
+
+    public void onGoToSearch(String hwid){
+
+    }
 }
