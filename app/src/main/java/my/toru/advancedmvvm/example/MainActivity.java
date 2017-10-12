@@ -10,8 +10,10 @@ import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.functions.Action;
 import io.reactivex.functions.Consumer;
+import io.reactivex.functions.Function;
 import io.reactivex.schedulers.Schedulers;
 import my.toru.advancedmvvm.R;
+import my.toru.advancedmvvm.example.model.MyTagModel;
 import my.toru.advancedmvvm.example.model.RequestModel;
 import my.toru.advancedmvvm.example.model.ResponseModel;
 
@@ -61,10 +63,16 @@ public class MainActivity extends AppCompatActivity {
         disposable.add(viewModel.getTagsModel(query)
                         .observeOn(AndroidSchedulers.mainThread())
                         .subscribeOn(Schedulers.io())
-                        .subscribe(new Consumer<ResponseModel>() {
+                        .map(new Function<ResponseModel<MyTagModel>, MyTagModel>() {
                             @Override
-                            public void accept(ResponseModel responseModel) throws Exception {
-                                Log.w(TAG, "accept: " + responseModel.toString());
+                            public MyTagModel apply(ResponseModel<MyTagModel> myTagModelResponseModel) throws Exception {
+                                return myTagModelResponseModel.getResponse();
+                            }
+                        })
+                        .subscribe(new Consumer<MyTagModel>() {
+                            @Override
+                            public void accept(MyTagModel myTagModel) throws Exception {
+
                             }
                         }, new Consumer<Throwable>() {
                             @Override
@@ -73,14 +81,13 @@ public class MainActivity extends AppCompatActivity {
                             }
                         }, new Action() {
                             @Override
-                            public void run() throws Exception {
-
-                            }
-                        }));
+                            public void run() throws Exception {}
+                        })
+        );
     }
 
     private void unbindViewModel(){
-        if(!disposable.isDisposed()){
+        if(!disposable.isDisposed()) {
             disposable.dispose();
         }
     }

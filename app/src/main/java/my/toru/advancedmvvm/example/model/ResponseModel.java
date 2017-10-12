@@ -8,7 +8,7 @@ import my.toru.advancedmvvm.model.MvvmModel;
  * Created by toruchoi on 11/10/2017.
  */
 
-public class ResponseModel extends MvvmModel {
+public class ResponseModel<T> extends MvvmModel {
     private static final String TAG = ResponseModel.class.getSimpleName();
 
     @SerializedName("status_code")
@@ -17,7 +17,7 @@ public class ResponseModel extends MvvmModel {
     @SerializedName("status_message")
     private String statusMessage;
 
-    private MyTagModel response;
+    private T response;
 
     public String getStatusCode() {
         return statusCode;
@@ -35,11 +35,11 @@ public class ResponseModel extends MvvmModel {
         this.statusMessage = statusMessage;
     }
 
-    public MyTagModel getResponse() {
+    public T getResponse() {
         return response;
     }
 
-    public void setResponse(MyTagModel response) {
+    public void setResponse(T response) {
         this.response = response;
     }
 }

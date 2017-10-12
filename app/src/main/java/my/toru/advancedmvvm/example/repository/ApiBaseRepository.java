@@ -4,6 +4,7 @@ import java.util.Map;
 import java.util.concurrent.TimeUnit;
 
 import io.reactivex.Observable;
+import my.toru.advancedmvvm.example.model.MyTagModel;
 import my.toru.advancedmvvm.example.model.RequestModel;
 import my.toru.advancedmvvm.example.model.ResponseModel;
 import okhttp3.OkHttpClient;
@@ -61,6 +62,6 @@ public class ApiBaseRepository {
 
     public interface IPushwooshService {
         @POST("getTags")
-        Observable<ResponseModel> getTagService(@Body Map<String, RequestModel> query);
+        Observable<ResponseModel<MyTagModel>> getTagService(@Body Map<String, RequestModel> query);
     }
 }
