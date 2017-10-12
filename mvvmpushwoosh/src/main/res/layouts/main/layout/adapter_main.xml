@@ -1,6 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+        <variable
+            name="mainModel"
+            type="my.toru.mvvmpushwoosh.TagInfoModel"/>
+    </data>
+
     <android.support.v7.widget.CardView
         android:layout_width="match_parent"
         android:layout_height="130dp"
@@ -29,26 +36,19 @@
                 android:id="@+id/txt_device_name"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="toru"/>
+                android:text="@{mainModel.name}"/>
 
             <TextView
                 android:id="@+id/txt_push_token"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="pushtokenishere"/>
+                android:text="@{mainModel.pushtoken}"/>
 
             <TextView
                 android:id="@+id/txt_description"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="description"/>
-
-            <TextView
-                android:id="@+id/txt_languages"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="ENGLISH"/>
-
+                android:text="@{mainModel.description}"/>
         </LinearLayout>
 
     </android.support.v7.widget.CardView>
