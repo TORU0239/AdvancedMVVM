@@ -8,6 +8,7 @@ import io.reactivex.Observable;
 import my.toru.mvvmpushwoosh.TagInfoModel;
 import my.toru.mvvmpushwoosh.repository.model.TagListRequestModel;
 import my.toru.mvvmpushwoosh.repository.model.ResponseModel;
+import my.toru.mvvmpushwoosh.repository.model.TestDeviceListModel;
 import okhttp3.OkHttpClient;
 import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.Retrofit;
@@ -63,6 +64,6 @@ public class ApiBaseRepository {
 
     public interface IPushwooshService {
         @POST("listTestDevices")
-        Observable<ResponseModel<List<TagInfoModel>>> getTagListService(@Body Map<String, TagListRequestModel> query);
+        Observable<ResponseModel<TestDeviceListModel>> getTagListService(@Body Map<String, TagListRequestModel> query);
     }
 }

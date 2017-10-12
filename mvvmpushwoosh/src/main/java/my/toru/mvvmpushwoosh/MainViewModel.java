@@ -10,11 +10,11 @@ import java.util.List;
 
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.functions.Consumer;
-import io.reactivex.functions.Function;
 import io.reactivex.schedulers.Schedulers;
 import my.toru.mvvmpushwoosh.repository.ApiBaseRepository;
 import my.toru.mvvmpushwoosh.repository.model.ResponseModel;
 import my.toru.mvvmpushwoosh.repository.model.TagListRequestModel;
+import my.toru.mvvmpushwoosh.repository.model.TestDeviceListModel;
 import retrofit2.Retrofit;
 
 /**
@@ -22,6 +22,8 @@ import retrofit2.Retrofit;
  */
 
 public class MainViewModel extends BaseObservable{
+    private static final String APP_ID = "APP_ID";
+    private static final String APP_AUTH = "APP_AUTH";
 
     // this part update View due to change of Model.
     private ObservableField<List<TagInfoModel>> tagInfoModelList;
@@ -40,22 +42,21 @@ public class MainViewModel extends BaseObservable{
 
             HashMap<String, TagListRequestModel> tagQueryModel = new HashMap<>();
             TagListRequestModel requestModel = new TagListRequestModel();
-            requestModel.setApplication("FCB57-748C5");
-            requestModel.setAuth("hv0RjV5zrQWniE6V3VzJgv3fLr7AkpGOMGEblVANvsrNMhZLaBNpqIM8s1FVAoCkfyIJakVkV5gEiPXDBkeP");
+            requestModel.setApplication(APP_ID);
+            requestModel.setAuth(APP_AUTH);
             tagQueryModel.put("request",requestModel);
             service.getTagListService(tagQueryModel)
                     .observeOn(AndroidSchedulers.mainThread())
                     .subscribeOn(Schedulers.io())
-                    .map(new Function<ResponseModel<List<TagInfoModel>>, List<TagInfoModel>>() {
+                    .subscribe(new Consumer<ResponseModel<TestDeviceListModel>>() {
                         @Override
-                        public List<TagInfoModel> apply(ResponseModel<List<TagInfoModel>> listResponseModel) throws Exception {
-                            return listResponseModel.getResponse();
+                        public void accept(ResponseModel<TestDeviceListModel> deviceListResponse) throws Exception {
+                            tagInfoModelList.set(deviceListResponse.getResponse().getTestDeviceList());
                         }
-                    })
-                    .subscribe(new Consumer<List<TagInfoModel>>() {
+                    }, new Consumer<Throwable>() {
                         @Override
-                        public void accept(List<TagInfoModel> tagInfoModels) throws Exception {
-                            tagInfoModelList.set(tagInfoModels);
+                        public void accept(Throwable throwable) throws Exception {
+                            throwable.printStackTrace();
                         }
                     });
         }

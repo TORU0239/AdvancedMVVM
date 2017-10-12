@@ -5,6 +5,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import my.toru.mvvmpushwoosh.databinding.AdapterMainBinding;
@@ -17,6 +18,13 @@ public class MainAdapter extends RecyclerView.Adapter<MainAdapter.MainViewHolder
     private static final String TAG = MainAdapter.class.getSimpleName();
 
     private List<TagInfoModel> modelList;
+
+    public void updateModelList(List<TagInfoModel> modelList) {
+        if(this.modelList == null){
+            this.modelList = new ArrayList<>();
+        }
+        this.modelList.addAll(modelList);
+    }
 
     public MainAdapter(List<TagInfoModel> modelList) {
         this.modelList = modelList;

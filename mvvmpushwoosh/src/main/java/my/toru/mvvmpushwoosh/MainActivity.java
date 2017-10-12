@@ -3,12 +3,11 @@ package my.toru.mvvmpushwoosh;
 import android.databinding.DataBindingUtil;
 import android.databinding.Observable;
 import android.databinding.ObservableField;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import my.toru.mvvmpushwoosh.databinding.ActivityMainBinding;
@@ -18,16 +17,24 @@ public class MainActivity extends AppCompatActivity {
 
     private ActivityMainBinding binding;
 
-    private ObservableField<List<TagInfoModel>> modelList = new ObservableField<>();
+    private ObservableField<List<TagInfoModel>> tagInfoModelList = new ObservableField<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
-
         binding = DataBindingUtil.setContentView(this, R.layout.activity_main);
-        binding.setViewModel(new MainViewModel(modelList));
+
+        tagInfoModelList.addOnPropertyChangedCallback(new Observable.OnPropertyChangedCallback() {
+            @Override
+            public void onPropertyChanged(Observable observable, int i) {
+                Log.w(TAG, "onPropertyChanged: size: " + tagInfoModelList.get().size());
+                ((MainAdapter)(binding.rcvMain.getAdapter())).updateModelList(tagInfoModelList.get());
+                binding.rcvMain.getAdapter().notifyDataSetChanged();
+            }
+        });
+        binding.setViewModel(new MainViewModel(tagInfoModelList));
         binding.rcvMain.setLayoutManager(new LinearLayoutManager(this));
-        binding.rcvMain.setAdapter(new MainAdapter(modelList.get()));
+        MainAdapter adapter = new MainAdapter(tagInfoModelList.get());
+        binding.rcvMain.setAdapter(adapter);
     }
 }

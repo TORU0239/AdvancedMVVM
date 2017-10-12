@@ -62,7 +62,7 @@ public class MainActivity extends AppCompatActivity {
 
                 HashMap<String, RequestModel> tagQueryModel = new HashMap<>();
                 RequestModel requestModel = new RequestModel();
-                requestModel.setApplication("FCB57-748C5");
+                requestModel.setApplication("APP_ID");
                 requestModel.setHwid("97476d339300fb63");
                 tagQueryModel.put("request",requestModel);
 
