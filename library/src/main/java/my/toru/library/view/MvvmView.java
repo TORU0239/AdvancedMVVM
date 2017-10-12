@@ -1,4 +1,4 @@
-package my.toru.advancedmvvm.view;
+package my.toru.library.view;
 
 /**
  * Created by toruchoi on 11/10/2017.

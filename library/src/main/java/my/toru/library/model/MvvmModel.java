@@ -1,4 +1,4 @@
-package my.toru.advancedmvvm.model;
+package my.toru.library.model;
 
 /**
  * Created by toruchoi on 11/10/2017.

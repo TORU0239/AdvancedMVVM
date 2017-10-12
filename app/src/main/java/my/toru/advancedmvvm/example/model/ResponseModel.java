@@ -2,7 +2,7 @@ package my.toru.advancedmvvm.example.model;
 
 import com.google.gson.annotations.SerializedName;
 
-import my.toru.advancedmvvm.model.MvvmModel;
+import my.toru.library.model.MvvmModel;
 
 /**
  * Created by toruchoi on 11/10/2017.
