@@ -9,7 +9,8 @@ import my.toru.advancedmvvm.example.model.MyTagModel;
 import my.toru.advancedmvvm.example.model.RequestModel;
 import my.toru.advancedmvvm.example.model.ResponseModel;
 import my.toru.advancedmvvm.example.repository.ApiBaseRepository;
-import my.toru.advancedmvvm.viewmodel.MvvmViewModel;
+
+import my.toru.library.viewmodel.MvvmViewModel;
 import retrofit2.Retrofit;
 
 /**
@@ -31,5 +32,9 @@ public class ExampleViewModel implements MvvmViewModel {
         return service.getTagService(queryModel)
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribeOn(Schedulers.io());
+    }
+
+    public void onGoToSearch(String hwid){
+
     }
 }
